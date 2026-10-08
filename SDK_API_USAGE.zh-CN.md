@@ -1,5 +1,7 @@
 # rmAxSdk1 SDK API 使用说明
 
+[简体中文](SDK_API_USAGE.zh-CN.md) | [English](SDK_API_USAGE.en.md)
+
 本文档面向 SDK 使用方，内容以当前公开头文件
 `appSrc/rmAxSdkApi.h`、`appSrc/rmAxSdkTypes.h` 和对应实现为准。
 `SDK使用记录.md` 中经过实际项目验证的集成经验也已整理到本文的“最佳实践与常见问题”章节。
@@ -1042,7 +1044,9 @@ rmAxSdk1: Build Android arm64 Release
 
 ```text
 build/dist/android-arm64-v8a/
-├── SDK_API_USAGE.md
+├── SDK_API_USAGE.zh-CN.md
+├── SDK_API_USAGE.en.md
+├── tst_rmAxSdkApi.cpp
 ├── include/rmAxSdk1/
 │   ├── rmAxSdkApi.h
 │   └── rmAxSdkTypes.h
