@@ -1015,4 +1015,50 @@ add_custom_command(TARGET RadioMasterAX POST_BUILD
 ```
 
 Android/Linux 必须部署目标 ABI 对应的 SDK 及其运行时依赖。当前仓库提供的 CMake
-presets 是 Windows x64 预设；其他平台应由构建工程提供匹配的工具链和 ABI 配置。
+presets 同时包含 Windows x64 和 Android arm64-v8a Release。使用当前开发机配置时，
+可在 VS Code 中运行 `rmAxSdk1: Build Android arm64 Release`，或执行：
+
+```powershell
+D:\Tools\QT6.8\Tools\CMake_64\bin\cmake.exe `
+    --preset Android-Arm64-Release
+
+D:\Tools\QT6.8\Tools\CMake_64\bin\cmake.exe `
+    --build --preset build-android-arm64-release --parallel
+```
+
+生成的共享库位于：
+
+```text
+build/android-arm64-v8a-release/librmAxSdk1.so
+```
+
+在 VS Code 中运行以下任务时，会在编译成功后自动剥离并更新发布目录：
+
+```text
+rmAxSdk1: Build Android arm64 Release
+```
+
+`rmAxSdk1: Package Android arm64 Release` 保留为同一流程的别名。两个任务最终生成：
+
+```text
+build/dist/android-arm64-v8a/
+├── SDK_API_USAGE.md
+├── include/rmAxSdk1/
+│   ├── rmAxSdkApi.h
+│   └── rmAxSdkTypes.h
+├── lib/arm64-v8a/
+│   ├── librmAxSdk1.so
+│   ├── libQt6Core_arm64-v8a.so
+│   ├── libQt6Network_arm64-v8a.so
+│   ├── libQt6SerialPort_arm64-v8a.so
+│   ├── libQt6Concurrent_arm64-v8a.so
+│   └── libc++_shared.so
+└── licenses/
+    └── Qt-LICENSE.txt
+```
+
+`liblog.so`、`libm.so`、`libz.so`、`libdl.so` 和 `libc.so` 由 Android 系统提供，
+不应复制进发布目录。
+
+Android preset 中的 SDK、NDK、JDK 和目标工具链路径与当前开发机安装位置对应。
+迁移到其他开发机时，应修改 `CMakePresets.json` 中的相关路径。
